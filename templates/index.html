@@ -1,0 +1,117 @@
+{% extends "account/base.html" %}
+{%load static %}
+{% load i18n %}
+
+{% block head_links %} 
+
+<title>Home</title>
+
+{% endblock %}
+
+{% block head_title %}{% trans "Sign In" %} {% endblock %}
+
+{% block content %}
+<div class="container main-box">
+ {% block messages %}
+    {% if messages %}
+    <div>
+        <ul>
+        {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>{{message}}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+        {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+  {% endblock %}
+
+ <div class="container">
+      <div class="row">
+      <div class="col-sm-4">
+      <h5 id="time" class="text-right font-weight-bold" style="color: #81B214;"></h5>
+      </div>
+        <div class="col-sm-8 mb-3" align="right">
+          <h5 class="text-right font-weight-bold" style="color: #81B214;">
+            {{countz}} Present Tasks 
+          </h5>
+        </div>
+      </div>
+      <h4 class="my-2">Incomplete Tasks:</h4>
+      <table class="table mt-4">
+        <tbody>
+          {% for match in incomplete%}
+          <tr>
+            <td>{{match.title}}</td>
+            <td>{{match.desc}}</td>
+            <form action="" method="POST">
+            {% csrf_token %}
+            {% if match.check == True %}
+            <input type="hidden" name="check" value="False">
+            <input type="hidden" name="taskid" value="{{match.id}}">
+            <td><button class="btn btn-primary btn-block login-button" type="submit">Uncheck</button></td>
+            {%else%}
+            <input type="hidden" name="check" value="True">
+            <input type="hidden" name="taskid" value="{{match.id}}">
+            <td><button class="btn btn-primary btn-block login-button" type="submit">Check</button></td>
+            {%endif%}
+            </form>
+          </tr>
+          {% empty %}
+          <h6>Congratulations! 🎉 You are free for the day!</h6>
+          {%endfor%}
+        </tbody>
+      </table>
+      <h4>Completed Tasks:</h4>
+      <table class="table mt-4">
+        <tbody>
+          {% for match in complete %}
+          <tr>
+           <td>{{match.title}}</td>
+            <td>{{match.desc}}</td>
+            <form action="" method="POST">
+            {% csrf_token %}
+            {% if match.check == True %}
+            <input type="hidden" name="check" value="False">
+            <input type="hidden" name="taskid" value="{{match.id}}">
+            <td><button class="btn btn-primary btn-block login-button" type="submit">Uncheck</button></td>
+            {%else%}
+            <input type="hidden" name="check" value="True">
+            <input type="hidden" name="taskid" value="{{match.id}}">
+            <td><button class="btn btn-primary btn-block login-button" type="submit">Check</button></td>
+            {%endif%}
+            </form>
+          </tr>
+          {% empty %}
+          <h6>Hurry Up, and complete the Incomplete Tasks!</h6>
+          {%endfor%}
+        </tbody>
+      </table>
+    </div>
+    <script>
+    function checkTime(i) {
+    if (i < 10) {
+        i = "0" + i;
+    }
+    return i;
+}
+
+function startTime() {
+    var today = new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    // add a zero in front of numbers<10
+    m = checkTime(m);
+    s = checkTime(s);
+    document.getElementById('time').innerHTML = h + ":" + m + ":" + s;
+    t = setTimeout(function () {
+        startTime()
+    }, 500);
+}
+startTime();
+    </script>
+  {% endblock %}

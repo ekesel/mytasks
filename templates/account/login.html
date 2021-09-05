@@ -1,0 +1,56 @@
+{% extends "account/base.html" %}
+{%load static %}
+{% load i18n %}
+
+{% block head_links %} 
+
+<title>Login</title>
+
+{% endblock %}
+
+{% block head_title %}{% trans "Sign In" %} {% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+<div class="container main-box">
+ {% block messages %}
+    {% if messages %}
+    <div>
+        <ul>
+        {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>{{message}}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+        {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+  {% endblock %}
+
+<div >
+            <img src="{% static 'small_logo.png' %}" style="width:200px;"  class="img-fluid custom-logo" alt="logo">
+        </div>
+<h3 class="h3" id="head_banner">{% trans "Sign In" %}</h3>
+
+<form class="custom-input" id="login_form" method="POST" action="{% url 'account_login' %}">
+  {% csrf_token %}
+  
+  {{ form.as_p }}
+
+  {% if redirect_field_value %}
+  
+    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  
+  {% endif %}
+  <div class="d-inline-flex">
+  <div class="p-2"> <button  class="btn btn-primary btn-block login-button" type="submit">{% trans "Sign In" %}</button></div>
+  <div class="p-2"><a  class="btn btn-primary btn-block login-button" href="{% url 'account_reset_password' %}">{% trans "Forgot Password ?" %}</a>  
+</div>
+</form>
+    </div>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "account/base.html" %}
+{%load static %}
+{% load i18n %}
+
+{% block head_links %} 
+
+<title>Add Task</title>
+
+{% endblock %}
+
+{% block head_title %}{% trans "Sign In" %} {% endblock %}
+
+{% block content %}
+<div class="container main-box">
+ {% block messages %}
+    {% if messages %}
+    <div>
+        <ul>
+        {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>{{message}}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+        {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+  {% endblock %}
+    <div class="container">
+        <h4 class="text-right font-weight-bold">Present Tasks: {{countz}} </h4>
+
+        <div class="exercise-main-box">
+            <form method="POST">
+			{% csrf_token %}
+                <div class="form-row">
+                    <div class="col-md-12 mb-3">
+                        <label class="mb-0">Task Name</label>
+                        <input type="text" name="name" class="form-control custom-input mt-0" placeholder="Task Name" required>
+                    </div>
+
+                    <div class="col-md-12 mb-3">
+                    <label class="mb-0">Description</label>
+                        <input type="text" name="desc" class="form-control custom-input" placeholder="Short summary of the task" required>
+                    </div>
+
+                    <button class="btn btn-primary btn-block submit-button mt-2" name="normal" role="button"
+                        aria-pressed="true">Submit</button>
+                    </form>
+                </div>
+                <form action="" method="post" class="container">
+                    {% csrf_token %}
+                    <button class="btn btn-primary btn-block submit-button mt-2" name="yesterday" role="button"
+                    aria-pressed="true">Use Previous Set Tasks</button>
+                    </form>
+            
+        </div>
+    </div>
+
+
+
+
+  {% endblock %}

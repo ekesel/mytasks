@@ -1,0 +1,47 @@
+{% extends "account/base.html" %}
+{%load static %}
+{% load i18n %}
+
+{% block head_links %} 
+
+<title>Profile</title>
+
+{% endblock %}
+
+{% block head_title %}{% trans "Sign In" %} {% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+<div class="container main-box">
+ {% block messages %}
+    {% if messages %}
+    <div>
+        <ul>
+        {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>{{message}}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+        {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+  {% endblock %}
+  <div class="container">
+        <div class="welcome-box">
+            <div class="name-box">
+                <h2>I am, </h2>
+                <h2>Ekaansh Sahni </h2>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <h4>I created this Application so that people can add and complete their tasks easily. This was a problem for me also that i was not able to track down my daily tasks and the other online tools were not to my choice, so i coded this in Django within 4 hours.</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
