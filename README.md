@@ -19,7 +19,7 @@ pip install -r requirements.txt
 
 ## Setting Up
 
-Use [Secret Key Generator](https://djecrety.ir/) to set up a django secret key. now open .env file in taskapp directory and paste it in there. Change SMTP email in settings.py and set its password in .env file. And you are good to Go!
+Use [Secret Key Generator](https://djecrety.ir/) to set up a django secret key. now create and open .env file in taskapp directory and paste it in there. Change SMTP email in settings.py and set its password in .env file. And you are good to Go!
 
 
 ## Contributing
