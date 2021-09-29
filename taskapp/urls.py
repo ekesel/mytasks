@@ -23,4 +23,5 @@ urlpatterns = [
     path('history/',history,name="history"),
     path('about/',about,name="about"),
     path('profile/',profile,name="profile"),
+    path('delete/',deletetask,name="deletetask"),
 ]

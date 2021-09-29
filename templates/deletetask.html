@@ -4,7 +4,7 @@
 
 {% block head_links %} 
 
-<title>Home</title>
+<title>Delete Task</title>
 
 {% endblock %}
 
@@ -36,33 +36,26 @@
       </div>
         <div class="col-sm-8 mb-3" align="right">
           <h5 class="text-right font-weight-bold" style="color: #81B214;">
-            {{countz}} Tasks 
+            {{countz}} Present Tasks 
           </h5>
         </div>
       </div>
-      <h4 class="my-2">History:</h4>
+      <h4 class="my-2">Delete Tasks:</h4>
+      <p>If you delete a daily task, you will need to recreate it.</p>
       <table class="table mt-4">
         <tbody>
-          {% for match in tasks%}
+          {% for match in taskdelete %}
           <tr>
             <td>{{match.title}}</td>
             <td>{{match.desc}}</td>
-            <td>{{match.date}}</td>
             <form action="" method="POST">
             {% csrf_token %}
-            {% if match.check == True %}
-            <input type="hidden" name="check" value="False">
             <input type="hidden" name="taskid" value="{{match.id}}">
-            <td><button class="btn btn-primary btn-block login-button" type="submit">Uncheck</button></td>
-            {%else%}
-            <input type="hidden" name="check" value="True">
-            <input type="hidden" name="taskid" value="{{match.id}}">
-            <td><button class="btn btn-primary btn-block login-button" type="submit">Check</button></td>
-            {%endif%}
+            <td><button class="btn btn-danger btn-block login-button" name="normal" type="submit">Delete</button></td>
             </form>
           </tr>
           {% empty %}
-          <h6>Uhhh, Add some tasks First!</h6>
+          <h6>Congratulations! 🎉 You don't have any tasks to delete!</h6>
           {%endfor%}
         </tbody>
       </table>

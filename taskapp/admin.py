@@ -8,4 +8,13 @@ class taskAdmin(admin.ModelAdmin):
     search_fields = ('title','user')
     list_per_page = 15
 
+
+class streakAdmin(admin.ModelAdmin):
+    list_display = ('count','user')
+    list_filter = ('user',)
+    search_fields = ('user',)
+    list_per_page = 15
+
 admin.site.register(tasks,taskAdmin)
+
+admin.site.register(streak,streakAdmin)

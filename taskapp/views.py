@@ -50,11 +50,14 @@ def addtask(request):
             if 'normal' in request.POST:
                 name= request.POST['name']
                 desc = request.POST['desc']
-                obj = tasks.objects.filter(user=user,title__iexact=name)
+                obj = tasks.objects.filter(user=user,title__iexact=name,date=datetime.date.today())
                 if obj.count() != 0:
                     messages.error(request,"This Task Already Exist!")
                 else:
-                    tasks.objects.create(title=name,desc=desc,user=user,check=False)
+                    if 'daily' in request.POST:
+                        tasks.objects.create(title=name,desc=desc,user=user,check=False,types='Daily')
+                    else:
+                        tasks.objects.create(title=name,desc=desc,user=user,check=False)
                     messages.success(request,"Task Created!")
             if 'yesterday' in request.POST:
                 ob = tasks.objects.filter(user=user,date__lt=datetime.date.today())[0]
@@ -75,3 +78,21 @@ def addtask(request):
 
 def profile(request):
     return render(request,'account/Profile.html')
+
+def deletetask(request):
+    user = request.user
+    if user.is_authenticated:
+        taskdelete = tasks.objects.filter(user=user,date=datetime.date.today())
+        count = taskdelete.count()
+        if request.method == "POST":
+            id = request.POST['taskid']
+            obj = tasks.objects.get(id=id)
+            obj.delete()
+            messages.success(request, "Task Deleted")
+        parms = {
+            "taskdelete":taskdelete,
+            "countz":count,
+        }
+        return render(request,'deletetask.html',parms)
+    else:
+        return redirect('account_login')
